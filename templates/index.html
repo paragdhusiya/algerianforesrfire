@@ -1,1 +1,141 @@
-<h1> Welcome to the Home Page </h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="dynamicTitle">FWI Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        .login {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Dark mode styles */
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+        }
+
+        /* Floating effect for input buttons */
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        input[type="text"]:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        /* Dark mode button styles */
+        .dark-mode-btn {
+            position: absolute;
+            top: 100px;
+            right: 100px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            font-size: 24px;
+            color: #232323;
+            transition: color 0.3s;
+        }
+
+        .dark-mode-btn:hover {
+            color: #ccc;
+        }
+
+        /* Output styles */
+        h2.output {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff5733; /* Change to desired color */
+            margin-top: 20px;
+        }
+
+        /* Title styles */
+        #dynamicTitle {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333; /* Initial color */
+            transition: color 0.3s;
+        }
+
+        #dynamicTitle:hover {
+            color: #007bff; /* Change to desired hover color */
+            transform: scale(1.1); /* Scale up on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <button class="dark-mode-btn" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="login">
+        <h1 id="dynamicTitle">FWI Prediction</h1>
+
+        <!-- Main Input For Receiving Query to our ML -->
+        <form action="{{ url_for('predict_datapoint')}}" method="post">
+            <input type="text" name="Temperature" placeholder="Temperature" required="required" /><br>
+            <input type="text" name="RH" placeholder="RH" required="required" /><br>
+            <input type="text" name="Ws" placeholder="Ws" required="required" /><br>
+            <input type="text" name="Rain" placeholder="Rain" required="required" /><br>
+            <input type="text" name="FFMC" placeholder="FFMC" required="required" /><br>
+            <input type="text" name="DMC" placeholder="DMC" required="required" /><br>
+            <input type="text" name="ISI" placeholder="ISI" required="required" /><br>
+            <input type="text" name="Classes" placeholder="Classes" required="required" /><br>
+            <input type="text" name="Region" placeholder="Region" required="required" /><br>
+
+            <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+        </form>
+        <h2 class="output">
+            THE FWI prediction is {{result}}
+        </h2>
+    </div>
+
+    <!-- JavaScript for dark mode functionality -->
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+
+</html>
